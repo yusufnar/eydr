@@ -20,3 +20,6 @@ default[:establish_replication] = false
 
 # Set to true to failover to D/R environment during Chef run
 default[:failover] = false
+
+# Set to a higher value depending on the available CPUs on master
+default[:parallelism] = 1
