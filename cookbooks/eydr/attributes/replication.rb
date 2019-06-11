@@ -11,8 +11,7 @@ default[:dr_replication] = {
       :public_hostname => ""
     }
   },
-  # The following 2 URLs are required for MySQL replication
-  :xtrabackup_download_url => "http://www.percona.com/redir/downloads/XtraBackup/XtraBackup-2.2.6/binary/tarball/percona-xtrabackup-2.2.6-5042-Linux-x86_64.tar.gz",
+  # The following URL is required for compressing/decompressing backups
   :qpress_download_url => "http://www.quicklz.com/qpress-11-linux-x64.tar"
 }
 

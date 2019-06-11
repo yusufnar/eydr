@@ -11,6 +11,9 @@ when "mysql5_5"
 when "mysql5_6"
   mysql :latest_version => "5.6.14", :virtual => "5.6", :short_version => '5.6'
   datadir '/db/mysql/5.6/data/'
+when "mysql5_7"
+  mysql :latest_version => "5.7.19", :virtual => "5.7", :short_version => '5.7'
+  datadir '/db/mysql/5.7/data/'
 when "postgres9"
   postgresql :latest_version => "9.0.13", :short_version => "9.0"
   datadir '/db/postgresql/9.0/data'

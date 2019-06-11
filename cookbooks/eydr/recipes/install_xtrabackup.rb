@@ -3,34 +3,23 @@
 # Recipe:: install_xtrabackup
 #
 
-# Download xtrabackup from URL specificed in attributes
-bash "download-xtrabackup" do
-  user node['owner_name']
-  code "cd /home/#{node['owner_name']}/ && wget #{node[:dr_replication][:xtrabackup_download_url]}"
-  not_if { File.exists? "/home/#{node['owner_name']}/#{node[:dr_replication][:xtrabackup_download_url].split("/").last}"}
+# Required for xtrabackup
+enable_package "app-arch/lz4" do
+  version '1.8.3'
 end
 
-# Untar xtrabackup
-bash "untar-xtrabackup" do
-  user node['owner_name']
-  code "cd /home/#{node['owner_name']}/ && tar zxvf #{node[:dr_replication][:xtrabackup_download_url].split("/").last}"
+package "app-arch/lz4" do
+  version '1.8.3'
+  action :install
 end
 
-# Copy xtrabackup into /usr/bin so that it's in the PATH
-bash "copy-xtrabackup" do
-  user "root"
-  code "yes | cp -ruf /home/#{node['owner_name']}/#{node[:dr_replication][:xtrabackup_download_url].split("/").last.split("-")[0..2].join("-")}*/bin/* /usr/bin/"
+# Install xtrabackup
+enable_package "dev-db/percona-xtrabackup" do
+  version '2.4.13'
 end
 
-# Ensure proper ownership
-bash "chown-xtrabackup" do
-  user "root"
-  cwd "/usr/bin/"
-  code "chown #{node['owner_name']}:#{node['owner_name']} innobackupex xbcrypt xbstream xtrabackup*"
-end
-
-# Install libaio (required for xtrabackup)
-package "dev-libs/libaio" do
+package "dev-db/percona-xtrabackup" do
+  version '2.4.13'
   action :install
 end
 
