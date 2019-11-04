@@ -9,7 +9,7 @@ include_recipe "eydr::install_xtrabackup"
 template "/etc/mysql.d/replication.cnf" do
   source "replication.cnf.erb"
   variables({
-    :server_id => node[:engineyard][:this].split("-")[1].to_i(16),
+    :server_id => node[:dna][:engineyard][:this].split("-")[1].to_i(16),
     :datadir => node[:datadir],
     :short_version => node[:mysql][:short_version]
   })
@@ -24,6 +24,7 @@ template "/engineyard/bin/setup_replication.sh" do
   backup 0
   variables({
     :master_pass => node[:owner_pass],
+    :parallelism => node[:parallelism],
     :initiate_public_hostname => node[:dr_replication][node[:environment][:framework_env]][:initiate][:public_hostname],
     :slave_public_hostname => node[:dr_replication][node[:environment][:framework_env]][:slave][:public_hostname],
     :master_public_hostname => node[:dr_replication][node[:environment][:framework_env]][:master][:public_hostname],

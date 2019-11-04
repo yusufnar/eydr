@@ -3,7 +3,7 @@
 # Recipe:: mysql_master_configuration
 #
 
-if solo?
+if ['solo'].include?(node['dna']['instance_role'])
   remote_file "/etc/mysql.d/logbin.cnf" do
     source "logbin.cnf"
     owner "root"
@@ -17,6 +17,6 @@ if solo?
   end
 end
 
-if db_server?
+if ['db_master', 'solo', 'db_slave'].include?(node['dna']['instance_role'])
   include_recipe "eydr::install_xtrabackup"
 end
